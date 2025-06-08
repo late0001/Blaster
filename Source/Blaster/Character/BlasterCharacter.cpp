@@ -4,6 +4,8 @@
 #include "BlasterCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Gameframework/CharacterMovementComponent.h"
+
 // Sets default values
 ABlasterCharacter::ABlasterCharacter()
 {
@@ -17,6 +19,9 @@ ABlasterCharacter::ABlasterCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>("FollowCamera");
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+	
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 // Called when the game starts or when spawned
