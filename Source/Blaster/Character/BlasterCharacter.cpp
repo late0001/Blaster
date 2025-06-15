@@ -9,6 +9,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Blaster/Weapon/Weapon.h"
 #include "Blaster/BlasterComponents/CombatComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ABlasterCharacter::ABlasterCharacter()
@@ -34,6 +35,9 @@ ABlasterCharacter::ABlasterCharacter()
 	Combat->SetIsReplicated(true);
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+
 }
 
 // Called when the game starts or when spawned
@@ -113,14 +117,17 @@ void ABlasterCharacter::LookUp(float Value)
 
 void ABlasterCharacter::EquipButtonPressed()
 {
+	UE_LOG(LogTemp, Warning, TEXT("EquipButtonPressed!"));
 	if (Combat)
 	{
 		if (HasAuthority())
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Server Press E Key to Equipping Weapon!"));
 			Combat->EquipWeapon(OverlappingWeapon);
 		}
 		else
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Client Press E Key to Equipping Weapon!"));
 			ServerEquipButtonPressed();
 		}
 	}
