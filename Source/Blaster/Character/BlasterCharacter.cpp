@@ -192,6 +192,17 @@ void ABlasterCharacter::AimOffset(float DeltaTime)
 	}
 
 	AO_Pitch = GetBaseAimRotation().Pitch;
+	//if (HasAuthority() && !IsLocallyControlled()) {
+	//	UE_LOG(LogTemp, Warning, TEXT("AO_Pitch: %f"), AO_Pitch);
+	//}
+	if (AO_Pitch > 90.f && !IsLocallyControlled())
+	{
+		//map pitch from [270. 360) to [-90, 0)
+		FVector2D InRange(270.f, 360.f);
+		FVector2D OutRange(-90.f, 0.f);
+		AO_Pitch = FMath::GetMappedRangeValueClamped(InRange, OutRange, AO_Pitch);
+	}
+	
 }
 
 
