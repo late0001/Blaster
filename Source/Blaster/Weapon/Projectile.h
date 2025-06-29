@@ -21,6 +21,9 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* CollisionBox;
+
+	UPROPERTY(VisibleAnyWhere)
+	class UProjectileMovementComponent* ProjectileMovementComponent;
 public:	
 	
 
