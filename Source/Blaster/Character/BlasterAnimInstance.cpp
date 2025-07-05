@@ -73,8 +73,9 @@ void UBlasterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 			FTransform RightHeadTransform = EquippedWeapon->GetWeaponMesh()->GetSocketTransform(FName("hand_r"),
 				ERelativeTransformSpace::RTS_World);
 
-			RightHandRotation = UKismetMathLibrary::FindLookAtRotation(RightHeadTransform.GetLocation(),
+			FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(RightHeadTransform.GetLocation(),
 				RightHeadTransform.GetLocation() + (RightHeadTransform.GetLocation() - BlasterCharacter->GetHitTarget()));
+			RightHandRotation = FMath::RInterpTo(RightHandRotation, LookAtRotation, DeltaTime, 30.f);
 		}
 
 		//FTransform MuzzleTipTransform = EquippedWeapon->GetWeaponMesh()->GetSocketTransform(FName("MuzzleFlash"),
