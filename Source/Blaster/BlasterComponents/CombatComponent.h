@@ -7,7 +7,7 @@
 #include "Blaster/HUD/BlasterHUD.h"
 #include "CombatComponent.generated.h"
 
-#define TRACE_LENGTH 80000
+#define TRACE_LENGTH 80000.f
 class AWeapon;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -38,6 +38,8 @@ protected:
 	void OnRep_EquippedWeapon();
 
 	void FireButtonPressed(bool bPressed);
+
+	void Fire();
 	
 	UFUNCTION(Server, Reliable)
 	void ServerFire(const FVector_NetQuantize& TracehitTarget);
@@ -96,6 +98,18 @@ private:
 	float ZoomInterpSpeed = 20.f;
 
 	void InterpFOV(float DeltaTime);
+
+	/**
+	 * Automatic fire
+	 */
+	FTimerHandle FireTimer;
+
+
+	bool bCanFire = true;
+
+	void StartFireTimer();
+	void FireTimerFinished();
+
 public:	
 
 
