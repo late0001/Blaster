@@ -92,7 +92,11 @@ void UCombatComponent::Fire()
 
 void UCombatComponent::StartFireTimer()
 {
-	if (EquippedWeapon == nullptr || Character == nullptr) return;
+	if (EquippedWeapon == nullptr || Character == nullptr)
+	{
+		bCanFire = true;
+		return;
+	}
 	Character->GetWorldTimerManager().SetTimer(
 		FireTimer,
 		this,
